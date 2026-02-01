@@ -89,13 +89,13 @@ module.exports = {
 
 ### Examples
 
-**Package: `@saas/audit`**
+**Package: `@core/audit`**
 - Migrations: `packages/audit/src/migrations/20240201000000-create-audit-logs.js`
 
 **Package: `@core/auth`**
 - Migrations: `packages/auth/src/migrations/20240202000000-create-users.js`
 
-**Package: `@saas/billing`**
+**Package: `@core/billing`**
 - Migrations: `packages/billing/src/migrations/20240203000000-create-subscriptions.js`
 
 All migrations will be discovered and run in timestamp order, regardless of which package they belong to.

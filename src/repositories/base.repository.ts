@@ -57,16 +57,26 @@ export abstract class BaseRepository<T extends Model> {
    */
   async update(values: Partial<T>, options: UpdateOptions): Promise<[number, T[]]> {
     const result = await this.model.update(values as any, options);
-    const updated = await this.model.findAll({ where: options.where, ...options });
+    // Extract where and transaction from options for findAll
+    const { where, transaction, logging } = options;
+    const updated = await this.model.findAll({
+      where,
+      transaction,
+      logging,
+    });
     return [result[0], updated as T[]];
   }
 
   /**
    * Update a single record by primary key
+   * @param id - Primary key of the record to update
+   * @param values - Values to update
+   * @param options - Optional Sequelize update options (supports transaction)
+   * @returns Updated record
    */
   async updateById(id: string | number, values: Partial<T>, options?: Omit<UpdateOptions, "where">): Promise<T> {
     const [affectedCount] = await this.model.update(values as any, {
-      where: { id } as Record<string, unknown>,
+      where: { id } as any,
       ...options,
     });
     
@@ -74,7 +84,12 @@ export abstract class BaseRepository<T extends Model> {
       throw DatabaseException.recordNotFound(`Record with id ${id} not found`);
     }
     
-    return (await this.model.findByPk(id)) as T;
+    // Pass transaction to findByPk if provided in options
+    const findOptions: FindOptions = {};
+    if (options?.transaction) {
+      findOptions.transaction = options.transaction;
+    }
+    return (await this.model.findByPk(id, findOptions)) as T;
   }
 
   /**
@@ -89,7 +104,7 @@ export abstract class BaseRepository<T extends Model> {
    */
   async deleteById(id: string | number, options?: Omit<DestroyOptions, "where">): Promise<number> {
     return this.model.destroy({
-      where: { id } as Record<string, unknown>,
+      where: { id } as any,
       ...options,
     });
   }
