@@ -1,0 +1,36 @@
+{
+  "name": "@core/database",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sequelize, migrations, base repos, tenant-scoping",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "migrate": "node src/scripts/run-migrations.js db:migrate",
+    "migrate:undo": "node src/scripts/run-migrations.js db:migrate:undo",
+    "migrate:status": "node src/scripts/run-migrations.js db:migrate:status",
+    "migrate:discover": "node src/scripts/discover-migrations.js",
+    "seed": "ts-node src/scripts/seed.ts",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "mysql2": "^3.6.0",
+    "sequelize": "^6.35.0",
+    "sequelize-typescript": "^2.1.6"
+  },
+  "devDependencies": {
+    "@types/sequelize": "^4.28.0",
+    "sequelize-cli": "^6.6.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/sequelize": "^10.0.0",
+    "reflect-metadata": "^0.2.0",
+    "rxjs": "^7.8.0",
+    "@core/common": "workspace:*"
+  }
+}

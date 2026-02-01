@@ -1,0 +1,28 @@
+/**
+ * Database operation error codes.
+ * These codes are used consistently across the database package and mapped to user-friendly messages.
+ */
+export enum DatabaseErrorCode {
+  // Record not found errors
+  RECORD_NOT_FOUND = "DATABASE_RECORD_NOT_FOUND",
+  
+  // Transaction errors
+  TRANSACTION_FAILED = "DATABASE_TRANSACTION_FAILED",
+  TRANSACTION_TIMEOUT = "DATABASE_TRANSACTION_TIMEOUT",
+  
+  // Connection errors
+  CONNECTION_FAILED = "DATABASE_CONNECTION_FAILED",
+  CONNECTION_TIMEOUT = "DATABASE_CONNECTION_TIMEOUT",
+  
+  // Query errors
+  QUERY_FAILED = "DATABASE_QUERY_FAILED",
+  INVALID_QUERY = "DATABASE_INVALID_QUERY",
+  
+  // Constraint errors
+  UNIQUE_CONSTRAINT_VIOLATION = "DATABASE_UNIQUE_CONSTRAINT_VIOLATION",
+  FOREIGN_KEY_CONSTRAINT_VIOLATION = "DATABASE_FOREIGN_KEY_CONSTRAINT_VIOLATION",
+  
+  // Migration errors
+  MIGRATION_FAILED = "DATABASE_MIGRATION_FAILED",
+  MIGRATION_PENDING = "DATABASE_MIGRATION_PENDING",
+}
