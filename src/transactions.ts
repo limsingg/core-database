@@ -13,7 +13,7 @@ export class TransactionService {
   /**
    * Run a function within a database transaction.
    * Automatically commits on success or rolls back on error.
-   * 
+   *
    * @param fn - Function to execute within transaction
    * @returns Promise with the result of the function
    */
@@ -34,7 +34,7 @@ export class TransactionService {
 /**
  * Standalone function to run a transaction.
  * Requires Sequelize instance to be injected via TransactionService.
- * 
+ *
  * @deprecated Use TransactionService.runInTransaction() instead
  */
 export async function runInTransaction<T>(

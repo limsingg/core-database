@@ -4,7 +4,7 @@ const path = require('path');
 /**
  * Discovers all migration files from all packages in the monorepo.
  * Scans packages/*/src/migrations for migration files and returns them sorted by timestamp.
- * 
+ *
  * @returns {Array<{file: string, package: string, timestamp: string}>} Array of migration files with metadata
  */
 function discoverMigrations() {
@@ -24,7 +24,7 @@ function discoverMigrations() {
 
   for (const pkg of packages) {
     const migrationsDir = path.join(packagesDir, pkg, 'src', 'migrations');
-    
+
     if (fs.existsSync(migrationsDir)) {
       const files = fs.readdirSync(migrationsDir)
         .filter(file => file.endsWith('.js') || file.endsWith('.ts'))
@@ -32,7 +32,7 @@ function discoverMigrations() {
           // Extract timestamp from filename (format: YYYYMMDDHHMMSS-description.js)
           const match = file.match(/^(\d{14})-/);
           const timestamp = match ? match[1] : '00000000000000';
-          
+
           return {
             file: path.join(migrationsDir, file),
             package: pkg,
@@ -53,7 +53,7 @@ function discoverMigrations() {
 
 /**
  * Gets all migration file paths as a single array (for Sequelize CLI).
- * 
+ *
  * @returns {string[]} Array of absolute paths to migration files
  */
 function getMigrationPaths() {
@@ -63,7 +63,7 @@ function getMigrationPaths() {
 
 /**
  * Gets migration paths grouped by package (for reporting).
- * 
+ *
  * @returns {Object<string, string[]>} Object mapping package names to their migration files
  */
 function getMigrationsByPackage() {
@@ -86,7 +86,7 @@ if (require.main === module) {
   const byPackage = getMigrationsByPackage();
 
   console.log('Discovered migrations:\n');
-  
+
   if (migrations.length === 0) {
     console.log('  No migrations found.');
   } else {

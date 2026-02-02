@@ -2,15 +2,15 @@
 
 /**
  * Unified migration runner that discovers and runs migrations from all packages.
- * 
+ *
  * This script:
  * 1. Discovers all migrations from packages/*/src/migrations
  * 2. Sorts them by timestamp
  * 3. Runs them using Sequelize CLI
- * 
+ *
  * Usage:
  *   node run-migrations.js [sequelize-cli-args...]
- * 
+ *
  * Examples:
  *   node run-migrations.js db:migrate
  *   node run-migrations.js db:migrate:undo
@@ -28,14 +28,14 @@ require('dotenv').config();
 
 function runMigrations(command = 'db:migrate', args = []) {
   const migrations = discoverMigrations();
-  
+
   if (migrations.length === 0) {
     console.log('No migrations found.');
     return;
   }
 
   console.log(`Found ${migrations.length} migration(s) from ${new Set(migrations.map(m => m.package)).size} package(s):\n`);
-  
+
   const byPackage = {};
   for (const migration of migrations) {
     if (!byPackage[migration.package]) {
@@ -71,13 +71,13 @@ function runMigrations(command = 'db:migrate', args = []) {
   // Update .sequelizerc to use temp migrations directory
   const sequelizercPath = path.resolve(__dirname, '../../.sequelizerc');
   const originalSequelizerc = fs.readFileSync(sequelizercPath, 'utf8');
-  
+
   // Create temporary .sequelizerc
   const tempSequelizerc = originalSequelizerc.replace(
     /'migrations-path':\s*path\.resolve\([^)]+\)/,
     `'migrations-path': path.resolve('src', '.temp-migrations')`
   );
-  
+
   const tempSequelizercPath = path.join(__dirname, '../.temp-sequelizerc.js');
   fs.writeFileSync(tempSequelizercPath, tempSequelizerc);
 
