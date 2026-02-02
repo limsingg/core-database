@@ -1,10 +1,22 @@
 {
-  "name": "@core/database",
+  "name": "@limsingg/database",
   "version": "0.1.0",
   "private": true,
   "description": "Sequelize, migrations, base repos, tenant-scoping",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/limsingg/core-database.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "migrate": "node src/scripts/run-migrations.js db:migrate",
@@ -31,6 +43,6 @@
     "@nestjs/sequelize": "^10.0.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.0",
-    "@core/common": "workspace:*"
+    "@limsingg/common": "workspace:*"
   }
 }
