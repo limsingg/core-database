@@ -1,6 +1,6 @@
-# Error Handling in @core/database
+# Error Handling in @limsingg/database
 
-This document describes the error handling system implemented in the `@core/database` package.
+This document describes the error handling system implemented in the `@limsingg/database` package.
 
 ---
 
@@ -8,7 +8,7 @@ This document describes the error handling system implemented in the `@core/data
 
 1. **Error Codes**: All errors use standardized error codes (e.g., `DATABASE_RECORD_NOT_FOUND`)
 2. **Centralized Messages**: Error messages are mapped from codes, not hardcoded
-3. **Consistent Structure**: All errors use `AppException` from `@core/common`
+3. **Consistent Structure**: All errors use `AppException` from `@limsingg/common`
 4. **Reusability**: Error codes can be reused across different scenarios
 5. **Type Safety**: Error codes are defined as enums for type safety
 
@@ -67,10 +67,12 @@ try {
     // operations
   });
 } catch (error) {
-  if (error.name === 'SequelizeTimeoutError') {
+  if (error.name === "SequelizeTimeoutError") {
     throw DatabaseException.transactionTimeout();
   }
-  throw DatabaseException.transactionFailed("Transaction failed", { error: error.message });
+  throw DatabaseException.transactionFailed("Transaction failed", {
+    error: error.message,
+  });
 }
 ```
 
@@ -78,7 +80,7 @@ try {
 
 ## 🔄 Error Response Format
 
-All errors follow the `ErrorResponseDto` format from `@core/common`:
+All errors follow the `ErrorResponseDto` format from `@limsingg/common`:
 
 ```json
 {
@@ -105,19 +107,19 @@ All errors follow the `ErrorResponseDto` format from `@core/common`:
 
 ## 🔍 Error Code Reference
 
-| Code | HTTP Status | Message | Used When |
-|------|-------------|---------|-----------|
-| `DATABASE_RECORD_NOT_FOUND` | 404 | Record not found | Record lookup/update fails |
-| `DATABASE_TRANSACTION_FAILED` | 500 | Database transaction failed | Transaction rollback occurs |
-| `DATABASE_TRANSACTION_TIMEOUT` | 504 | Database transaction timed out | Transaction exceeds timeout |
-| `DATABASE_CONNECTION_FAILED` | 503 | Database connection failed | Cannot connect to database |
-| `DATABASE_CONNECTION_TIMEOUT` | 504 | Database connection timed out | Connection exceeds timeout |
-| `DATABASE_QUERY_FAILED` | 500 | Database query failed | Query execution fails |
-| `DATABASE_INVALID_QUERY` | 400 | Invalid database query | Query syntax/parameters invalid |
-| `DATABASE_UNIQUE_CONSTRAINT_VIOLATION` | 409 | Unique constraint violation | Duplicate unique value |
-| `DATABASE_FOREIGN_KEY_CONSTRAINT_VIOLATION` | 409 | Foreign key constraint violation | Invalid foreign key reference |
-| `DATABASE_MIGRATION_FAILED` | 500 | Database migration failed | Migration execution fails |
-| `DATABASE_MIGRATION_PENDING` | 503 | Database migration pending | Migrations not yet applied |
+| Code                                        | HTTP Status | Message                          | Used When                       |
+| ------------------------------------------- | ----------- | -------------------------------- | ------------------------------- |
+| `DATABASE_RECORD_NOT_FOUND`                 | 404         | Record not found                 | Record lookup/update fails      |
+| `DATABASE_TRANSACTION_FAILED`               | 500         | Database transaction failed      | Transaction rollback occurs     |
+| `DATABASE_TRANSACTION_TIMEOUT`              | 504         | Database transaction timed out   | Transaction exceeds timeout     |
+| `DATABASE_CONNECTION_FAILED`                | 503         | Database connection failed       | Cannot connect to database      |
+| `DATABASE_CONNECTION_TIMEOUT`               | 504         | Database connection timed out    | Connection exceeds timeout      |
+| `DATABASE_QUERY_FAILED`                     | 500         | Database query failed            | Query execution fails           |
+| `DATABASE_INVALID_QUERY`                    | 400         | Invalid database query           | Query syntax/parameters invalid |
+| `DATABASE_UNIQUE_CONSTRAINT_VIOLATION`      | 409         | Unique constraint violation      | Duplicate unique value          |
+| `DATABASE_FOREIGN_KEY_CONSTRAINT_VIOLATION` | 409         | Foreign key constraint violation | Invalid foreign key reference   |
+| `DATABASE_MIGRATION_FAILED`                 | 500         | Database migration failed        | Migration execution fails       |
+| `DATABASE_MIGRATION_PENDING`                | 503         | Database migration pending       | Migrations not yet applied      |
 
 ---
 
@@ -140,18 +142,20 @@ Error handling is implemented **within the database package** because:
 3. **Reusability**: Other packages can import and use database error codes if needed
 4. **Independence**: Database package doesn't depend on other packages for error handling
 
-The base `AppException` class comes from `@core/common`, but all database-specific error codes and messages are defined in `@core/database`.
+The base `AppException` class comes from `@limsingg/common`, but all database-specific error codes and messages are defined in `@limsingg/database`.
 
 ---
 
 ## 🔄 Migration from Hardcoded Errors
 
 **Before:**
+
 ```typescript
 throw new Error(`Record with id ${id} not found`);
 ```
 
 **After:**
+
 ```typescript
 throw DatabaseException.recordNotFound(`Record with id ${id} not found`);
 ```

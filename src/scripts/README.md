@@ -13,11 +13,13 @@ The database package includes a migration discovery system that automatically fi
 ### Migration File Naming
 
 Migrations must follow this naming convention:
+
 ```
 YYYYMMDDHHMMSS-description.js
 ```
 
 Example:
+
 ```
 20240201000000-create-audit-logs.js
 20240201120000-add-user-indexes.js
@@ -73,7 +75,7 @@ npm run migrate
 Each migration file should export `up` and `down` functions:
 
 ```javascript
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -89,13 +91,16 @@ module.exports = {
 
 ### Examples
 
-**Package: `@core/audit`**
+**Package: `@limsingg/audit`**
+
 - Migrations: `packages/audit/src/migrations/20240201000000-create-audit-logs.js`
 
-**Package: `@core/auth`**
+**Package: `@limsingg/auth`**
+
 - Migrations: `packages/auth/src/migrations/20240202000000-create-users.js`
 
-**Package: `@core/billing`**
+**Package: `@limsingg/billing`**
+
 - Migrations: `packages/billing/src/migrations/20240203000000-create-subscriptions.js`
 
 All migrations will be discovered and run in timestamp order, regardless of which package they belong to.

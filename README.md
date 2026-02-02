@@ -1,4 +1,4 @@
-# @core/database
+# @limsingg/database
 
 Sequelize + MySQL, migrations, base repositories, tenant-scoping, soft delete, transactions.
 
@@ -29,12 +29,12 @@ ORM and data access layer. All tenant-scoped and base CRUD patterns live here.
 ## Dependencies
 
 - `@nestjs/sequelize`, `sequelize`, `sequelize-typescript`, `mysql2`
-- **Peer:** `@core/common`
+- **Peer:** `@limsingg/common`
 
 ## Usage
 
 ```ts
-import { DatabaseModule } from "@core/database";
+import { DatabaseModule } from "@limsingg/database";
 
 @Module({
   imports: [
@@ -61,7 +61,7 @@ Use `BaseRepository` for CRUD and `runInTransaction` when you need atomicity:
 
 ```ts
 import { Injectable } from "@nestjs/common";
-import { BaseRepository, runInTransaction } from "@core/database";
+import { BaseRepository, runInTransaction } from "@limsingg/database";
 import { MyModel } from "./my.model";
 
 @Injectable()
@@ -80,7 +80,7 @@ export class MyService {
         "my-resource",
         entity.id,
         { dto },
-        tx,
+        tx
       );
       return entity;
     });
@@ -97,7 +97,7 @@ export class MyService {
 ```ts
 // In your app (e.g. src/projects/project.repository.ts)
 import { Injectable } from "@nestjs/common";
-import { BaseRepository } from "@core/database";
+import { BaseRepository } from "@limsingg/database";
 import { Project } from "./project.model";
 
 @Injectable()
@@ -131,11 +131,13 @@ See **DESIGN.md** and **IMPLEMENTATION_ORDER.md** in the repo root.
 The database package includes an automatic migration discovery system that finds migrations from all packages in the monorepo.
 
 **How it works:**
+
 - Each package can have migrations in `packages/{package-name}/src/migrations/`
 - Migrations are automatically discovered and run in timestamp order
 - Migration files must follow naming: `YYYYMMDDHHMMSS-description.js`
 
 **Example:**
+
 ```bash
 # Discover migrations
 npm run migrate:discover
