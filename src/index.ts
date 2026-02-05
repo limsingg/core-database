@@ -1,5 +1,5 @@
 /**
- * @core/database — Database library
+ * @limsingg/database — Database library
  * Sequelize, migrations, base repos, tenant-scoping, transactions
  */
 
@@ -9,6 +9,5 @@ export type {
   DatabaseModuleAsyncOptions,
 } from "./database.module";
 export * from "./repositories";
-export * from "./transactions";
-export { TransactionService } from "./transactions";
+export * from "./services";
 export * from "./errors";

@@ -1,5 +1,5 @@
 import { HttpStatus } from "@nestjs/common";
-import { AppException } from "@core/common";
+import { AppException } from "@limsingg/common";
 import { DatabaseErrorCode } from "./database-error-codes";
 import { getDatabaseErrorMessage } from "./database-error-messages";
 

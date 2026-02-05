@@ -1,6 +1,6 @@
 import { DynamicModule, Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
-import { TransactionService } from "./transactions";
+import { TransactionService } from "./services/transactions.service";
 
 /**
  * Options for DatabaseModule.forRootAsync.
