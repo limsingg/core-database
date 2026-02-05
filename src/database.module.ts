@@ -22,10 +22,10 @@ export interface DatabaseModuleOptions {
 
 export interface DatabaseModuleAsyncOptions {
   useFactory: (
-    ...args: unknown[]
+    ...args: any[]
   ) => Promise<DatabaseModuleOptions> | DatabaseModuleOptions;
-  inject?: unknown[];
-  imports?: unknown[];
+  inject?: any[];
+  imports?: any[];
 }
 
 @Module({})
